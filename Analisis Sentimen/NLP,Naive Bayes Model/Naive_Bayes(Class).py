@@ -74,6 +74,7 @@ class GaussianNaiveBayes:
 #panggil class naive bayes
 nb = GaussianNaiveBayes()
 
+
 #Fitting ke model menggunakan class naive bayes
 history = nb.fit(X_train, y_train)
 

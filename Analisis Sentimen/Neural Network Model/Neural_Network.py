@@ -1,11 +1,10 @@
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction.text import TfidfVectorizer
+import matplotlib.pyplot as plt
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
-import matplotlib.pyplot as plt
-
-
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from wordcloud import WordCloud
 
 #--------------Model------------#
 # baca dataset
@@ -32,6 +31,7 @@ X_test = vectorizer.transform(X_test)
 X_train = X_train.toarray()
 X_test = X_test.toarray()
 
+
 # Membuat model menggunakan neural network
 model = Sequential()
 model.add(Dense(64, input_shape=(X_train.shape[1],), activation='relu'))
@@ -44,8 +44,6 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 
 # latih model
 history = model.fit(X_train, y_train, epochs=10, batch_size=32, validation_data=(X_test, y_test))
-
-
 
 #----------------------Visualisasi Model Dan Evaluasi Model--------------------#
 # Visualisasi loss dan akurasi
@@ -71,6 +69,7 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 
+#plot gant chart label
 label_counts = data['label'].value_counts()
 plt.figure(figsize=(6, 4))
 label_counts.plot(kind='bar', color=['blue', 'red'])
@@ -80,10 +79,30 @@ plt.ylabel('Jumlah')
 plt.xticks(rotation=0)  # Untuk mengatur rotasi label sumbu x
 plt.show()
 
+#NLP
+#plot ulasan Negatif
+train_s0 = data[data["label"] == 0]
+all_text_s0 = ' '.join(word for word in train_s0["Ulasan_clean"])
+wordcloud = WordCloud(colormap='Reds', width=1000, height=1000, mode='RGBA', background_color='white').generate(all_text_s0)
+plt.figure(figsize=(20,10))
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis("off")
+plt.margins(x=0, y=0)
+plt.show()
 
-
+#plot ulasan positif
+train_s1 = data[data["label"] == 1]
+all_text_s1 = ' '.join(word for word in train_s1["Ulasan_clean"])
+wordcloud = WordCloud(colormap='Blues', width=1000, height=1000, mode='RGBA', background_color='white').generate(all_text_s1)
+plt.figure(figsize=(20,10))
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis("off")
+plt.title("Ulasan Positif")
+plt.margins(x=0, y=0)
+plt.show()
 
 # Evaluasi model
 loss, accuracy = model.evaluate(X_test, y_test)
 print(f"Loss: {loss}")
 print(f"Accuracy: {accuracy }")
+

@@ -69,6 +69,7 @@ X_test = X_test.toarray()
 #deklarasi metode cross validation
 cv_method = RepeatedStratifiedKFold(n_splits=5,  n_repeats=3, random_state=999)
 
+
 #panggil naive bayes menggunakan skcitlearn
 nb = GaussianNB()
 

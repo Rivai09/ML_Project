@@ -57,6 +57,7 @@ model = tf.keras.Sequential([tf.keras.layers.Dense(10,input_shape=[1]),
 model.compile(optimizer=tf.keras.optimizers.SGD(learning_rate=1e-3), loss='mean_squared_error',metrics=['mae'])
 
 
+
 # train the model
 history = model.fit(X_train, y_train, epochs=100,batch_size=32,validation_data=(X_test,y_test))
 
