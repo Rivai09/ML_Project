@@ -66,14 +66,10 @@ X_test = X_test.toarray()
 
 
 
-#deklarasi metode cross validation
 cv_method = RepeatedStratifiedKFold(n_splits=5,  n_repeats=3, random_state=999)
 
-
-#panggil naive bayes menggunakan skcitlearn
 nb = GaussianNB()
 
-#tuning hyperparameter menggunakan gridsearch
 params_NB = {'var_smoothing': np.logspace(0,-9, num=100)}
 
 gscv_nb = GridSearchCV(estimator=nb,
@@ -82,13 +78,12 @@ gscv_nb = GridSearchCV(estimator=nb,
                  verbose=1,
                  scoring='accuracy')
 
-#Fitting ke Model
 gscv_nb.fit(X_train,y_train)
 
 
 #predict model
 y_pred_nb = gscv_nb.predict(X_test)
-print('--------------------- confusion matrix  ----------------------------')
+print('confusion matrix')
 print(confusion_matrix(y_test, y_pred_nb))
-print('--------------------- classification report  ----------------------------')
+print('classification report')
 print(classification_report(y_test, y_pred_nb))
