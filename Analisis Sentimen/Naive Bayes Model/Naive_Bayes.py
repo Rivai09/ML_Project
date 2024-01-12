@@ -10,9 +10,9 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 
 
-#--------------------Model----------------#
+#----------------------------------------------Model-------------------------------------------#
 
-data = pd.read_excel("Dataset1.xlsx")
+data = pd.read_excel("Dataset3.xlsx")
 
 
 data["Ulasan_clean"] = data["Ulasan_clean"].fillna("tidak ada komentar")
@@ -52,7 +52,7 @@ print('classification report')
 print(classification_report(y_test, y_pred_nb))
 
 
-#--------------------Plot----------------#
+#--------------------------------------------Plot-----------------------------------------------#
 #tampilkan plot untuk label
 sentimen_data=pd.value_counts(data["label"], sort= True)
 sentimen_data.plot(kind= 'bar', color= ["green", "red"])
